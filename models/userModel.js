@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 
 const Schema = mongoose.Schema;
 
@@ -27,10 +26,10 @@ userSchema.statics.signup = async function (email, password, confirmPassword) {
     throw Error("Email already in use.");
   }
 
-  bcrypt.hash(password, saltRounds, async (err, hash) => {
-    const user = await this.create({ email: email, password: hash });
-    return user;
-  });
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  const user = await this.create({ email: email, password: hash });
+  return user;
 };
 
 userSchema.statics.login = async function (email, password) {
