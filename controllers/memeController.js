@@ -14,4 +14,14 @@ const addMeme = async (req, res) => {
   }
 };
 
-module.exports = { addMeme };
+const specificLanguage = async (req, res) => {
+  const language = req.params.language;
+  console.log(`from specific language - ${language}.`);
+};
+// general memes
+const general = async (req, res) => {
+  const query = req.params.general;
+  console.log(`grom general memes. + ${query}`);
+};
+
+module.exports = { addMeme, specificLanguage, general };
