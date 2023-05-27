@@ -11,9 +11,9 @@ const {
   getGeneralMeme,
 } = require("../controllers/memeController");
 
-router.post("/memes", requireAuth, requireAdminRole, postMeme);
+router.post("/", requireAuth, requireAdminRole, postMeme);
 
-router.delete("/memes/:id", deleteMeme);
+router.delete("/:id", deleteMeme);
 
 // get specific language meme
 router.get("/language/:language", getSpecificLanguageMeme);
