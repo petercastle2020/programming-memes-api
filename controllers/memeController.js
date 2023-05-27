@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const Meme = require("../models/memeModel");
 
-const addMeme = async (req, res) => {
-  console.log("from addMeme func");
-
+const postMeme = async (req, res) => {
   try {
     const newMeme = await Meme.create(req.body);
     if (newMeme) {
@@ -14,14 +12,40 @@ const addMeme = async (req, res) => {
   }
 };
 
-const specificLanguage = async (req, res) => {
+const deleteMeme = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const meme = await Meme.findById(id);
+
+    if (!meme) {
+      return res.status(404).json({ error: "Meme not found." });
+    }
+
+    await Meme.deleteOne({ _id: id });
+
+    res.json({ message: "Meme deleted successfully." });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the meme." });
+  }
+};
+
+const getSpecificLanguageMeme = async (req, res) => {
   const language = req.params.language;
   console.log(`from specific language - ${language}.`);
 };
 // general memes
-const general = async (req, res) => {
+const getGeneralMeme = async (req, res) => {
   const query = req.params.general;
   console.log(`grom general memes. + ${query}`);
 };
 
-module.exports = { addMeme, specificLanguage, general };
+module.exports = {
+  postMeme,
+  deleteMeme,
+  getSpecificLanguageMeme,
+  getGeneralMeme,
+};
