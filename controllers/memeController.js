@@ -34,8 +34,25 @@ const deleteMeme = async (req, res) => {
 };
 
 const getSpecificLanguageMeme = async (req, res) => {
-  const language = req.params.language;
-  console.log(`from specific language - ${language}.`);
+  const languageQuery = req.params.language;
+  console.log(`QUERY IN SPECIFIC MEME - ${language}.`);
+  try {
+    const foundRandomLanguageMeme = await Meme.aggregate([
+      { $match: { language: languageQuery } },
+      { $sample: { size: 1 } },
+    ]);
+
+    if (!foundRandomLanguageMeme) {
+      return res.status(404).json({ error: "Language meme not found." });
+    }
+
+    res.status(200).json(foundRandomLanguageMeme);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred fetching 'specificLanguage' meme." });
+  }
 };
 
 const getGeneralMeme = async (req, res) => {
