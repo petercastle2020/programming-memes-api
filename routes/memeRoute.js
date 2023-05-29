@@ -9,11 +9,14 @@ const {
   deleteMeme,
   getSpecificLanguageMeme,
   getGeneralMeme,
+  patchMeme,
 } = require("../controllers/memeController");
 
 router.post("/", /* requireAuth, requireAdminRole,*/ postMeme);
 
 router.delete("/:id", /* requireAuth, requireAdminRole, */ deleteMeme);
+
+router.patch("/:id", /* requireAuth, requireAdminRole, */ patchMeme);
 
 // get specific language meme
 router.get("/language/:language", getSpecificLanguageMeme);

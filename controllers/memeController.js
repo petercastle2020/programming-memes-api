@@ -33,6 +33,34 @@ const deleteMeme = async (req, res) => {
   }
 };
 
+const patchMeme = async (req, res) => {
+  try {
+    const patchData = req.body;
+    const { id } = req.params;
+
+    const meme = await Meme.findById(id);
+
+    if (!meme) {
+      return res.status(404).json({ error: "Meme not found" });
+    }
+
+    const updatedMeme = await Meme.findByIdAndUpdate(
+      { _id: id },
+      { ...patchData },
+      { new: true }
+    );
+
+    if (updatedMeme) {
+      res.status(200).json(updatedMeme);
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating the meme" });
+  }
+};
+
 const getSpecificLanguageMeme = async (req, res) => {
   const languageQuery = req.params.language;
   console.log(`QUERY IN SPECIFIC MEME - ${language}.`);
@@ -80,4 +108,5 @@ module.exports = {
   deleteMeme,
   getSpecificLanguageMeme,
   getGeneralMeme,
+  patchMeme,
 };
