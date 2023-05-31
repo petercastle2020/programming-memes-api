@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const memeRoutes = require("./routes/memeRoute");
 const userRoutes = require("./routes/userRoute");
+const cloudinaryRoutes = require("./routes/cloudinaryRoute");
 
 // express app
 const app = express();
@@ -17,6 +18,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
+
+app.use("/api/cloudinary", cloudinaryRoutes);
 
 app.use("/api/user", userRoutes);
 

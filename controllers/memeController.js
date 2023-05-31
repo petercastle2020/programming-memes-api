@@ -109,5 +109,4 @@ module.exports = {
   getSpecificLanguageMeme,
   getGeneralMeme,
   patchMeme,
-  testingLim,
 };
