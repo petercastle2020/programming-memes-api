@@ -6,6 +6,12 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
+// https://res.cloudinary.com/dbtdebbei/image/upload/v1685556682/general-programming-memes/kwfimzrwhoo6hetrzwdu.webp
+const extractPublicIdFromUrl = (url) => {
+  const publicId = url.split("/").pop().split(".")[0];
+  return publicId;
+};
+
 const getAllImageURLs = (req, res) => {
   const collectionName = req.params.collectionName;
   const maxNumberOfURLs = 100;
@@ -30,4 +36,4 @@ const getAllImageURLs = (req, res) => {
   );
 };
 
-module.exports = { getAllImageURLs };
+module.exports = { getAllImageURLs, extractPublicIdFromUrl };

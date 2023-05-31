@@ -6,12 +6,15 @@ const requireAdminRole = require("../middleware/requireAdminRole");
 const rateLimiter = require("../middleware/rateLimiter");
 
 const {
+  postMemeArray,
   postMeme,
   deleteMeme,
   getSpecificLanguageMeme,
   getGeneralMeme,
   patchMeme,
 } = require("../controllers/memeController");
+
+router.post("/memeArray", /* requireAuth, requireAdminRole,*/ postMemeArray);
 
 router.post("/", /* requireAuth, requireAdminRole,*/ postMeme);
 

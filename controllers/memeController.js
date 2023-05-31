@@ -1,5 +1,40 @@
 const mongoose = require("mongoose");
 const Meme = require("../models/memeModel");
+const { extractPublicIdFromUrl } = require("./cloudinarycontroller");
+
+const postMemeArray = async (req, res) => {
+  try {
+    const { urls, language } = req.body;
+
+    const newMemesArray = [];
+    const existingMemesArray = [];
+
+    for (const url of urls) {
+      const publicId = extractPublicIdFromUrl(url);
+
+      const existingMeme = await Meme.findOne({ cloudinaryPublicId: publicId });
+
+      if (existingMeme) {
+        console.log(
+          `Meme with public ID ${publicId} already exists. Skipping.`
+        );
+        existingMemesArray.push(existingMeme);
+      } else {
+        const newMeme = await Meme.create({
+          imageUrl: url,
+          language: language,
+          cloudinaryPublicId: publicId,
+        });
+        console.log(`New meme with public ID ${publicId} created.`);
+        newMemesArray.push(newMeme);
+      }
+    }
+
+    res.status(200).json({ newMemesArray, existingMemesArray });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to upload meme array." });
+  }
+};
 
 const postMeme = async (req, res) => {
   try {
@@ -104,6 +139,7 @@ const getGeneralMeme = async (req, res) => {
 };
 
 module.exports = {
+  postMemeArray,
   postMeme,
   deleteMeme,
   getSpecificLanguageMeme,
