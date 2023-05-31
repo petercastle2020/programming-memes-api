@@ -98,7 +98,7 @@ const patchMeme = async (req, res) => {
 
 const getSpecificLanguageMeme = async (req, res) => {
   const languageQuery = req.params.language;
-  console.log(`QUERY IN SPECIFIC MEME - ${language}.`);
+
   try {
     const foundRandomLanguageMeme = await Meme.aggregate([
       { $match: { language: languageQuery } },

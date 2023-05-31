@@ -8,8 +8,8 @@ const { getAllImageURLs } = require("../controllers/cloudinarycontroller");
 
 router.get(
   "/resources/:collectionName",
-  /*requireAuth,
-  requireAdminRole,*/
+  requireAuth,
+  requireAdminRole,
   getAllImageURLs
 );
 

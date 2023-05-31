@@ -14,18 +14,18 @@ const {
   patchMeme,
 } = require("../controllers/memeController");
 
-router.post("/memeArray", /* requireAuth, requireAdminRole,*/ postMemeArray);
+router.post("/postMemeArray", requireAuth, requireAdminRole, postMemeArray);
 
-router.post("/", /* requireAuth, requireAdminRole,*/ postMeme);
+router.post("/", requireAuth, requireAdminRole, postMeme);
 
-router.delete("/:id", /* requireAuth, requireAdminRole, */ deleteMeme);
+router.delete("/:id", requireAuth, requireAdminRole, deleteMeme);
 
-router.patch("/:id", /* requireAuth, requireAdminRole, */ patchMeme);
+router.patch("/:id", requireAuth, requireAdminRole, patchMeme);
 
 // get specific language meme
-router.get("/language/:language", /* rateLimiter, */ getSpecificLanguageMeme);
+router.get("/language/:language", rateLimiter, getSpecificLanguageMeme);
 
 // general meme
-router.get("/general", /* rateLimiter, */ getGeneralMeme);
+router.get("/general", rateLimiter, getGeneralMeme);
 
 module.exports = router;
