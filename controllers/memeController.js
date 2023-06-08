@@ -104,7 +104,8 @@ const getSpecificLanguageMeme = async (req, res) => {
       !languageQuery ||
       (languageQuery !== "python" && languageQuery !== "javascript")
     ) {
-      return res.status(400).json({ error: "Invalid language parameter" });
+      res.status(400).json({ error: "Invalid language parameter" });
+      return;
     }
 
     const foundRandomLanguageMeme = await Meme.aggregate([
@@ -112,7 +113,7 @@ const getSpecificLanguageMeme = async (req, res) => {
       { $sample: { size: 1 } },
     ]);
 
-    if (!foundRandomLanguageMeme) {
+    if (!foundRandomLanguageMeme || foundRandomLanguageMeme.length === 0) {
       return res.status(404).json({ error: "Language meme not found." });
     }
 
@@ -133,7 +134,7 @@ const getGeneralMeme = async (req, res) => {
       { $sample: { size: 1 } },
     ]);
 
-    if (!foundRandomGeneralMeme) {
+    if (!foundRandomGeneralMeme || !foundRandomGeneralMeme.length === 0) {
       return res.status(404).json({ error: "general meme not found." });
     }
     res.status(200).json(foundRandomGeneralMeme);
