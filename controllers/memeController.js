@@ -98,15 +98,18 @@ const patchMeme = async (req, res) => {
 
 const getSpecificLanguageMeme = async (req, res) => {
   const languageQuery = req.params.language;
+  console.log(languageQuery);
 
   if (
     !languageQuery ||
     (languageQuery !== "python" && languageQuery !== "javascript")
   ) {
+    console.log("inside IF STATEMENT");
     return res.status(400).json({ error: "Invalid language parameter" });
   }
 
   try {
+    console.log("INside TRY STATEMENT>");
     const foundRandomLanguageMeme = await Meme.aggregate([
       { $match: { language: languageQuery } },
       { $sample: { size: 1 } },
