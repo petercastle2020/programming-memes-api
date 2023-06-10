@@ -12,10 +12,18 @@ const app = express();
 // middleware
 app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log("path >", req.path, "body >", req.body, "method >", req.method);
-  next();
-});
+// KEEP IT HERE WITHOUT SHOWING ON LIVE LOGS.
+// app.use((req, res, next) => {
+//   console.log(
+//     "path >",
+//     req.path,
+//     "||| body >",
+//     req.body,
+//     "||| method >",
+//     req.method
+//   );
+//   next();
+// });
 
 // Routes
 
@@ -25,17 +33,13 @@ app.use("/api/user", userRoutes);
 
 app.use("/api/meme", memeRoutes);
 
-app.get("/hello", (req, res) => {
-  res.send("hello world.");
-});
-
 // connect to db
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     // listen for requests
     app.listen(process.env.PORT, () => {
-      console.log("server running on port: " + 4000);
+      console.log("server running on port: " + process.env.PORT);
     });
   })
   .catch((error) => {
