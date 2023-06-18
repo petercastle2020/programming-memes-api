@@ -4,7 +4,7 @@ Welcome to the Programming Memes API repository! This API provides a collection 
 
 ## Usage
 
-To retrieve a random programming meme, simply make a GET request to the `/memes/general` endpoint. You can also search for memes using specific language `/memes/language/:language` endpoint. Please check out the docs for all languages available.
+To retrieve a random programming meme, simply make a GET request to the `/api/memes/general` endpoint. You can also search for memes using specific language `/api/memes/language/:language` endpoint. Please check out the docs for all languages available.
 
 ## Base URL
 
