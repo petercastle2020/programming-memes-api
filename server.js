@@ -9,6 +9,9 @@ const cloudinaryRoutes = require("./routes/cloudinaryRoute");
 // express app
 const app = express();
 
+// Serve static files from the public folder
+app.use(express.static("public"));
+
 // middleware
 app.use(express.json());
 
@@ -32,6 +35,11 @@ app.use("/api/cloudinary", cloudinaryRoutes);
 app.use("/api/user", userRoutes);
 
 app.use("/api/meme", memeRoutes);
+
+// Catch-all route to redirect to the documentation page
+app.get("*", (req, res) => {
+  res.redirect("/documentation.html");
+});
 
 // connect to db
 mongoose
